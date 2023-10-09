@@ -309,7 +309,7 @@ Assuming you have already installed and setup `terraform`, `aws-cli` & `kubectl`
 **Step 1:** Clone the terraform code repo
 
 ```bash
-
+git clone https://github.com/umme-habiba786/devsecops-aws-cloud.git
 ```
 
 **Step 2:** Go to `terraform` directory and open and edit `variables.tf` file. Change the region to your current one.
