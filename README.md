@@ -1,23 +1,22 @@
 ![](assets/DevSecOps_pic.png)
 
-
 # Overview
 
 DevOps is the practice of developing software that integrates software development and IT operations to deliver software faster and ensure continuous delivery with high quality. However, security often becomes an afterthought when designing and managing a CI/CD pipeline, infrastructure, etc., for deploying large-scale applications. Therefore, it is important to incorporate security in every step of the Software Development Life Cycle (SDLC). DevSecOps is the practice of automating security throughout the SDLC by combining development, operations, and security into a single pipeline.
 
 In this project, we will build a complete CI/CD pipeline for a microservice application as most large-scale software follows microservice architecture nowadays. More importantly, we will include several security tools that can conduct security scans at various stages of the pipeline. Finally, we will setup monitoring and notification services.
 
-
 # Table of Contents<!-- omit from toc -->
+
 - [Overview](#overview)
-    - [AWS Services](#aws-services)
-    - [Monitoring Tools](#monitoring-tools)
-    - [Frameworks](#frameworks)
-    - [Database](#database)
-    - [Security Tools](#security-tools)
-  - [Application Architecture](#application-architecture)
-  - [AWS Architecture](#aws-architecture)
-  - [Application Source Code](#application-source-code)
+  - [AWS Services](#aws-services)
+  - [Monitoring Tools](#monitoring-tools)
+  - [Frameworks](#frameworks)
+  - [Database](#database)
+  - [Security Tools](#security-tools)
+    - [Application Architecture](#application-architecture)
+    - [AWS Architecture](#aws-architecture)
+    - [Application Source Code](#application-source-code)
 - [Prerequisites](#prerequisites)
   - [EC2 Instance](#ec2-instance)
   - [AWS CLI setup](#aws-cli-setup)
@@ -62,8 +61,6 @@ In this project, we will build a complete CI/CD pipeline for a microservice appl
   - [**OWASP ZAP Report Before**](#owasp-zap-report-before)
   - [**OWASP ZAP Report After**](#owasp-zap-report-after)
 
-
-
 ### AWS Services
 
 For the project you might require basic knowledge of the following tools and services:
@@ -97,7 +94,6 @@ For the project you might require basic knowledge of the following tools and ser
 
 - MySQL
 
-
 ### Security Tools
 
 In this project we used several popular security tools such as `PHPStan`, `SonarQube`, `OWASP Dependency-Check`, `Trivy` and `OWASP ZAP`. Let's briefly discuss each of them.
@@ -122,7 +118,6 @@ Trivy is an open-source vulnerability scanner designed specifically for containe
 
 OWASP ZAP (Zed Attack Proxy) is the world’s most widely used web app scanner. It is a free and open-source tool actively maintained by a dedicated international team of volunteers. ZAP helps identify security vulnerabilities in web applications by scanning them for potential weaknesses. It provides a range of options for security automation and has add-ons contributed by the community to extend its functionality.
 
-
 ## Application Architecture
 
 The following image displays the architecture of a microservice applicaiton
@@ -137,13 +132,13 @@ The following image potrays the architecture of the entire infrastructure in AWS
 
 ## Application Source Code
 
-[Registration-service](https://github.com/samin-bjit/vaccination-registration)
+[Vaccination-Registration-Service](https://github.com/umme-habiba786/vaccination-registration-service.git)
 
-[Frontend](https://github.com/samin-bjit/vaccination-frontend)
+[Vaccination-Appointment-Service](https://github.com/umme-habiba786/vaccination-appointment-service.git)
 
-[Auth-service](https://github.com/samin-bjit/vaccination-auth)
+[Vaccination-Auth-Service](https://github.com/umme-habiba786/vaccination-auth-service.git)
 
-[Appointment-service](https://github.com/samin-bjit/vaccination-appointment)
+[Vaccination-Frontend-Service](https://github.com/umme-habiba786/vaccination-frontend-service.git)
 
 Fork the above repositories into your own github account.
 
@@ -314,7 +309,7 @@ Assuming you have already installed and setup `terraform`, `aws-cli` & `kubectl`
 **Step 1:** Clone the terraform code repo
 
 ```bash
-git clone https://github.com/samin-bjit/AWS_DevSecOps_Infra_Monitor_Configs.git
+
 ```
 
 **Step 2:** Go to `terraform` directory and open and edit `variables.tf` file. Change the region to your current one.
@@ -348,6 +343,7 @@ aws eks update-kubeconfig --name <eks-cluster-name> --region <aws-region-name>
 ```bash
 kubectl cluster-info
 ```
+
 **Step 8:** Create a namespace where all our deployment would reside by running the following command
 
 ```bash
@@ -554,48 +550,57 @@ CodePipeline Stages and Action Group
  **Source Stage**
 
 - In this stage, source code will be fetched through the pipeline.
-- You can find the source code in the repository.
 
- **SonarQube**
+- You can find the source code in the repository.
+  
+  **SonarQube**
 
 - This action group will be provided by CodeBuild Stage. You can find the process of creating a build project configuration file in the above section of "CodeBuild Project Configuration".
+
 - Follow the CodeBuildProjectConfiguration process similarly to PHPStan, Dependency-Check and OWASP-ZAP.
+
 - You can find the process of integrating this "SonarQube" tool in the repository.
-
- **PHPStan**
+  
+  **PHPStan**
 
 - This action group will be provided by CodeBuild Stage.
+
 - You can find the process of integrating this "PHPStan" tool in the repository..
-
- **Dependency-Check**
+  
+  **Dependency-Check**
 
 - This action group will be provided by CodeBuild Stage.
-- You can find the process of integrating this "Dependency-Check" tool in the repository.
 
- **Docker Image Build**
+- You can find the process of integrating this "Dependency-Check" tool in the repository.
+  
+  **Docker Image Build**
 
 - You can find the process of creating a build project configuration file in the above section of "CodeBuild Project Configuration".
 
 - You can also find the docker image build yaml file in the repository.
-
- **Docker Image Scan with Trivy**
+  
+  **Docker Image Scan with Trivy**
 
 - Follow the section of CodeBuild Project Configuration and scan the docker image with the SecOps tool (Trivy).
-- You can find the buildspec file of trivy (docker image scan) in the repository.
 
- **Docker Image Push**
+- You can find the buildspec file of trivy (docker image scan) in the repository.
+  
+  **Docker Image Push**
 
 - Follow the section of CodeBuild Project Configuration and push the docker image to ECR.
-- You can also find the docker image push yaml file in the repository.
 
- **Deploy to EKS Cluster**
+- You can also find the docker image push yaml file in the repository.
+  
+  **Deploy to EKS Cluster**
 
 - Follow the section of CodeBuild Project Configuration and deploy the manifest files to EKS cluster.
-- You can find the kubernetes manifest files and buildspec file for deployment in EKS Cluster inside the repository.
 
- **OWASP-ZAP**
+- You can find the kubernetes manifest files and buildspec file for deployment in EKS Cluster inside the repository.
+  
+  **OWASP-ZAP**
 
 - This action group will be provided by CodeBuild Stage. You can find the process of integrating this "OWASP-ZAP" tool in "Security Tools" section.
+
 - You can find the process of integrating this "OWASP-ZAP" tool in the repository.
 
 `You can choose either GitHub configuration or CodeCommit configuration` 
@@ -964,7 +969,6 @@ CodePipeline Stages and Action Group
 
 * This policy will be auto generated when you create a build project and click on new service role.
 
-
 #### Sonarqube Installation
 
 **Step 1:** Java 11 installation steps
@@ -1254,9 +1258,8 @@ helm repo add metrics-server https://kubernetes-sigs.github.io/metrics-server/
 
 helm install metrics-server metrics-server/metrics-server -n prometheus
 ```
- 
-# Security Vulnerability Fixing Before / After
 
+# Security Vulnerability Fixing Before / After
 
 ## **Docker Image Vulnerability scanning with Trivy (Before)**
 
@@ -1269,7 +1272,6 @@ helm install metrics-server metrics-server/metrics-server -n prometheus
 ## **Docker Image scanning with Trivy (Pipeline Fail when Critical Vulnerability found)**
 
 ![Alt Text](./assets/docker-image-vulnerability-after.png)
-
 
 ## **Quality Gate Condition checking Vulnerability with SonarQube (Pipeline Failed)**
 
@@ -1286,4 +1288,3 @@ helm install metrics-server metrics-server/metrics-server -n prometheus
 ## **OWASP ZAP Report After**
 
 ![](./assets/zap-after.png)
-
